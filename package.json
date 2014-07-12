@@ -11,6 +11,7 @@
         "mongoose": "3.8.12",
         "utils": "serandules/utils#master",
         "mongutils": "serandules/mongutils#master",
+        "serand-token": "serandules/serand-token#master",
         "user": "serandules/user#master",
         "client": "serandules/client#master",
         "token": "serandules/token#master",
