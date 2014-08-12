@@ -1,10 +1,11 @@
+var http = require('http');
 var mongoose = require('mongoose');
 var express = require('express');
 var auth = require('auth');
+var agent = require('hub-agent');
 
 var mongourl = 'mongodb://localhost/test';
 var app = express();
-var HTTP_PORT = 4004;
 
 auth = auth({
     open: [
@@ -31,6 +32,5 @@ db.once('open', function callback() {
     app.use('/apis/v', require('vehicle-service'));
     app.use('/apis/v', require('token-service'));
 
-    app.listen(HTTP_PORT);
-    console.log('listening on port ' + HTTP_PORT);
+    agent(http.createServer(app));
 });

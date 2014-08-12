@@ -19,7 +19,8 @@
         "user-service": "serandules/user-service#master",
         "client-service": "serandules/client-service#master",
         "token-service": "serandules/token-service#master",
-        "vehicle-service": "serandules/vehicle-service#master"
+        "vehicle-service": "serandules/vehicle-service#master",
+        "hub-agent": "serandules/hub-agent#master"
     },
     "repository": {
         "type": "git",
