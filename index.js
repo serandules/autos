@@ -34,3 +34,8 @@ db.once('open', function callback() {
 
     agent(http.createServer(app));
 });
+
+process.on('uncaughtException', function (err) {
+    console.log('unhandled exception ' + err);
+    console.trace(err.stack);
+});
