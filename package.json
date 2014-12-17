@@ -20,6 +20,7 @@
         "client-service": "serandules/client-service#master",
         "token-service": "serandules/token-service#master",
         "vehicle-service": "serandules/vehicle-service#master",
+        "menu-service": "serandules/menu-service#master",
         "hub-agent": "serandules/hub-agent#master"
     },
     "repository": {
