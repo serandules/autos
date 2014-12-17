@@ -12,6 +12,9 @@ auth = auth({
         '^(?!\\/apis(\\/|$)).+',
         '^\/apis\/v\/tokens([\/].*|$)',
         '^\/apis\/v\/vehicles$'
+    ],
+    hybrid: [
+        '^\/apis\/v\/menus\/.*'
     ]
 });
 
@@ -31,6 +34,7 @@ db.once('open', function callback() {
     app.use('/apis/v', require('client-service'));
     app.use('/apis/v', require('vehicle-service'));
     app.use('/apis/v', require('token-service'));
+    app.use('/apis/v', require('menu-service'));
 
     agent(http.createServer(app));
 });
