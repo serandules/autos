@@ -36,6 +36,9 @@ db.once('open', function callback() {
     app.use('/apis/v', require('token-service'));
     app.use('/apis/v', require('menu-service'));
 
+    //error handling
+    app.use(agent.error);
+
     agent(http.createServer(app));
 });
 
