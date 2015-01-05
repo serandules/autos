@@ -1,3 +1,4 @@
+var debug = require('debug')('serandules-a');
 var http = require('http');
 var mongoose = require('mongoose');
 var express = require('express');
@@ -23,7 +24,7 @@ mongoose.connect(mongourl);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() {
-    console.log('connected to mongodb : ' + mongourl);
+    debug('connected to mongodb : ' + mongourl);
 
     app.use(auth);
 
@@ -43,6 +44,6 @@ db.once('open', function callback() {
 });
 
 process.on('uncaughtException', function (err) {
-    console.log('unhandled exception ' + err);
-    console.log(err.stack);
+    debug('unhandled exception ' + err);
+    debug(err.stack);
 });
