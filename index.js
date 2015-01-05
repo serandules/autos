@@ -1,4 +1,4 @@
-var debug = require('debug')('serandules-a');
+var debug = require('debug')('serandules:a');
 var http = require('http');
 var mongoose = require('mongoose');
 var express = require('express');
