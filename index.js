@@ -1,46 +1,50 @@
-var debug = require('debug')('serandules:a');
-var http = require('http');
-var mongoose = require('mongoose');
-var express = require('express');
-var auth = require('auth');
 var agent = require('hub-agent');
 
-var mongourl = 'mongodb://localhost/test';
-var app = express();
+agent(function () {
+    var debug = require('debug')('serandules:autos-services');
+    var http = require('http');
+    var mongoose = require('mongoose');
+    var express = require('express');
+    var auth = require('auth');
 
-auth = auth({
-    open: [
-        '^(?!\\/apis(\\/|$)).+',
-        '^\/apis\/v\/tokens([\/].*|$)',
-        '^\/apis\/v\/vehicles$'
-    ],
-    hybrid: [
-        '^\/apis\/v\/menus\/.*'
-    ]
-});
+    var mongourl = 'mongodb://localhost/test';
 
-mongoose.connect(mongourl);
+    var app = express();
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback() {
-    debug('connected to mongodb : ' + mongourl);
+    auth = auth({
+        open: [
+            '^(?!\\/apis(\\/|$)).+',
+            '^\/apis\/v\/tokens([\/].*|$)',
+            '^\/apis\/v\/vehicles$'
+        ],
+        hybrid: [
+            '^\/apis\/v\/menus\/.*'
+        ]
+    });
 
-    app.use(auth);
+    mongoose.connect(mongourl);
 
-    app.use(express.json());
-    app.use(express.urlencoded());
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function callback() {
+        debug('connected to mongodb : ' + mongourl);
 
-    app.use('/apis/v', require('user-service'));
-    app.use('/apis/v', require('client-service'));
-    app.use('/apis/v', require('vehicle-service'));
-    app.use('/apis/v', require('token-service'));
-    app.use('/apis/v', require('menu-service'));
+        app.use(auth);
 
-    //error handling
-    app.use(agent.error);
+        app.use(express.json());
+        app.use(express.urlencoded());
 
-    agent(http.createServer(app));
+        app.use('/apis/v', require('user-service'));
+        app.use('/apis/v', require('client-service'));
+        app.use('/apis/v', require('vehicle-service'));
+        app.use('/apis/v', require('token-service'));
+        app.use('/apis/v', require('menu-service'));
+
+        //error handling
+        app.use(agent.error);
+
+        http.createServer(app).listen(0);
+    });
 });
 
 process.on('uncaughtException', function (err) {
