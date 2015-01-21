@@ -1,7 +1,7 @@
+var debug = require('debug')('serandules:autos-services');
 var agent = require('hub-agent');
 
 agent(function () {
-    var debug = require('debug')('serandules:autos-services');
     var http = require('http');
     var mongoose = require('mongoose');
     var express = require('express');
