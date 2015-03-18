@@ -1,9 +1,9 @@
 var log = require('logger')('autos-services');
 var clustor = require('clustor');
 
-var domain = '*.autos.serandives.com';
+var self = 'autos.serandives.com';
 
-clustor(domain, function () {
+clustor(function () {
     var http = require('http');
     var mongoose = require('mongoose');
     var express = require('express');
@@ -67,7 +67,7 @@ clustor(domain, function () {
         });
     });
 }, function (err, address) {
-    log.info('drone started | domain:%s, address:%s, port:%s', domain, address.address, address.port);
+    log.info('drone started | domain:%s, address:%s, port:%s', self, address.address, address.port);
 });
 
 process.on('uncaughtException', function (err) {
