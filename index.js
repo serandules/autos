@@ -1,6 +1,7 @@
 var log = require('logger')('autos-services');
 var clustor = require('clustor');
-
+var posix = require('posix');
+posix.setrlimit('nofile', {soft: 10000});
 var self = 'autos.serandives.com';
 
 clustor(function () {
@@ -55,15 +56,13 @@ clustor(function () {
         server.listen(0);
 
         agent('/drones', function (err, io) {
-            io.once('connect', function () {
-                io.on('join', function (drone) {
-                    log.info(drone);
-                });
-                io.on('leave', function (drone) {
-                    log.info(drone);
-                });
-                procevent.emit('started');
+            io.on('join', function (drone) {
+                log.info(drone);
             });
+            io.on('leave', function (drone) {
+                log.info(drone);
+            });
+            procevent.emit('started');
         });
     });
 }, function (err, address) {
