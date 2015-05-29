@@ -9,7 +9,6 @@
     "dependencies": {
         "express": "4.*",
         "mongoose": "4.*",
-        "posix": "2.*",
         "body-parser": "1.*",
         "logger": "serandules/logger#master",
         "clustor": "serandules/clustor#master",

@@ -1,7 +1,5 @@
 var log = require('logger')('autos-services');
 var clustor = require('clustor');
-var posix = require('posix');
-posix.setrlimit('nofile', {soft: 10000});
 var self = 'autos.serandives.com';
 
 clustor(function () {
