@@ -11,7 +11,7 @@ clustor(function () {
     var procevent = require('procevent')(process);
     var auth = require('auth');
 
-    var mongourl = 'mongodb://localhost/test';
+    var mongourl = 'mongodb://localhost/serandives';
 
     var app = express();
 
