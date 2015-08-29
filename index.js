@@ -41,11 +41,7 @@ clustor(function () {
 
         app.use(bodyParser.json());
 
-        app.use('/apis/v', require('user-service'));
-        app.use('/apis/v', require('client-service'));
         app.use('/apis/v', require('vehicle-service'));
-        app.use('/apis/v', require('token-service'));
-        app.use('/apis/v', require('menu-service'));
 
         //error handling
         //app.use(agent.error);
