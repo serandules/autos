@@ -18,6 +18,7 @@ clustor(function () {
     auth = auth({
         open: [
             '^(?!\\/apis(\\/|$)).+',
+            '^\/apis\/v\/configs\/boot$',
             '^\/apis\/v\/tokens([\/].*|$)',
             '^\/apis\/v\/vehicles$'
         ],
