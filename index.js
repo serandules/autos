@@ -1,4 +1,4 @@
-var log = require('logger')('autos-services');
+var log = require('logger')('autos');
 var nconf = require('nconf');
 var express = require('express');
 var bodyParser = require('body-parser');
