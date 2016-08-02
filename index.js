@@ -1,39 +1,40 @@
 var log = require('logger')('autos-services');
-var clustor = require('clustor');
-var self = 'autos.serandives.com';
+var nconf = require('nconf');
+var http = require('http');
+var mongoose = require('mongoose');
+var express = require('express');
+var bodyParser = require('body-parser');
+var agent = require('hub-agent');
+var procevent = require('procevent')(process);
+var auth = require('auth');
+var serandi = require('serandi');
+var serand = require('serand');
+var dust = require('dustjs-linkedin');
 
-clustor(function () {
-    var http = require('http');
-    var mongoose = require('mongoose');
-    var express = require('express');
-    var bodyParser = require('body-parser');
-    var agent = require('hub-agent');
-    var procevent = require('procevent')(process);
-    var auth = require('auth');
-    var serandi = require('serandi');
+var client = 'autos';
+var version = nconf.get('AUTOS_CLIENT');
 
-    var mongourl = 'mongodb://localhost/serandives';
+var app = express();
 
-    var app = express();
+auth = auth({
+    open: [
+        '^(?!\\/apis(\\/|$)).+',
+        '^\/apis\/v\/configs\/boot$',
+        '^\/apis\/v\/tokens([\/].*|$)',
+        '^\/apis\/v\/vehicles$'
+    ],
+    hybrid: [
+        '^\/apis\/v\/menus\/.*'
+    ]
+});
 
-    auth = auth({
-        open: [
-            '^(?!\\/apis(\\/|$)).+',
-            '^\/apis\/v\/configs\/boot$',
-            '^\/apis\/v\/tokens([\/].*|$)',
-            '^\/apis\/v\/vehicles$'
-        ],
-        hybrid: [
-            '^\/apis\/v\/menus\/.*'
-        ]
-    });
+module.exports = function (done) {
+    serand.index(client, version, function (err, index) {
+        if (err) {
+            throw err;
+        }
 
-    mongoose.connect(mongourl);
-
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function callback() {
-        log.debug('connected to mongodb : ' + mongourl);
+        dust.loadSource(dust.compile(index, 'index'));
 
         app.use(serandi.ctx)
         app.use(auth);
@@ -49,24 +50,47 @@ clustor(function () {
         //error handling
         //app.use(agent.error);
 
-        var server = http.createServer(app);
-        server.listen(0);
-
-        agent('/drones', function (err, io) {
-            io.on('join', function (drone) {
-                log.info(drone);
+        //index page with embedded oauth tokens
+        app.all('/auth/oauth', function (req, res) {
+            var context = {
+                version: version,
+                code: req.body.code || req.query.code,
+                error: req.body.error || req.query.error,
+                errorCode: req.body.error_code || req.query.error_code
+            };
+            //TODO: check caching headers
+            dust.render('index', context, function (err, index) {
+                if (err) {
+                    log.error(err);
+                    res.status(500).send({
+                        error: 'error rendering requested page'
+                    });
+                    return;
+                }
+                res.set('Content-Type', 'text/html').status(200).send(index);
             });
-            io.on('leave', function (drone) {
-                log.info(drone);
-            });
-            procevent.emit('started');
         });
-    });
-}, function (err, address) {
-    log.info('drone started | domain:%s, address:%s, port:%s', self, address.address, address.port);
-});
+        //index page
+        app.all('*', function (req, res) {
+            //TODO: check caching headers
+            var context = {
+                version: version
+            };
+            //TODO: check caching headers
+            dust.render('index', context, function (err, index) {
+                if (err) {
+                    log.error(err);
+                    res.status(500).send({
+                        error: 'error rendering requested page'
+                    });
+                    return;
+                }
+                res.set('Content-Type', 'text/html').status(200).send(index);
+            });
+        });
 
-process.on('uncaughtException', function (err) {
-    log.debug('unhandled exception ' + err);
-    log.debug(err.stack);
-});
+        //error handling
+        //app.use(agent.error);
+        done(null, app);
+    });
+};
