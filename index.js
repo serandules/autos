@@ -73,7 +73,7 @@ module.exports = function (done) {
                 version: version
             };
             //TODO: check caching headers
-            dust.render('index', context, function (err, index) {
+            dust.render(client, context, function (err, index) {
                 if (err) {
                     log.error(err);
                     res.status(500).send({
