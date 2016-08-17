@@ -8,7 +8,7 @@ var serand = require('serand');
 var dust = require('dustjs-linkedin');
 
 var client = 'autos';
-var version = nconf.get('AUTOS_CLIENT');
+var version = nconf.get('CLIENT_AUTOS');
 
 var app = express();
 
