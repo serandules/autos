@@ -50,9 +50,10 @@ module.exports = function (done) {
         app.all('/auth/oauth', function (req, res) {
             var context = {
                 version: version,
-                code: req.body.code || req.query.code,
-                error: req.body.error || req.query.error,
-                errorCode: req.body.error_code || req.query.error_code
+                username: req.body.username,
+                access: req.body.access_token,
+                expires: req.body.expires_in,
+                refresh: req.body.refresh_token
             };
             //TODO: check caching headers
             dust.render(client, context, function (err, index) {
