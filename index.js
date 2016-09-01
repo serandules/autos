@@ -9,6 +9,7 @@ var dust = require('dustjs-linkedin');
 
 var client = 'autos';
 var version = nconf.get('CLIENT_AUTOS');
+var cdn = nconf.get('CDN');
 
 var app = express();
 
@@ -50,6 +51,7 @@ module.exports = function (done) {
         app.all('/auth/oauth', function (req, res) {
             var context = {
                 version: version,
+                cdn: cdn,
                 username: req.body.username,
                 access: req.body.access_token,
                 expires: req.body.expires_in,
@@ -71,7 +73,8 @@ module.exports = function (done) {
         app.all('*', function (req, res) {
             //TODO: check caching headers
             var context = {
-                version: version
+                version: version,
+                cdn: cdn
             };
             //TODO: check caching headers
             dust.render(client, context, function (err, index) {
