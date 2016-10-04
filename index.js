@@ -19,7 +19,9 @@ auth = auth({
         '^(?!\\/apis(\\/|$)).+',
         '^\/apis\/v\/configs\/boot$',
         '^\/apis\/v\/tokens([\/].*|$)',
-        '^\/apis\/v\/vehicles$'
+        '^\/apis\/v\/vehicles$',
+        '^\/apis\/v\/vehicle-makes$',
+        '^\/apis\/v\/vehicle-models$'
     ],
     hybrid: [
         '^\/apis\/v\/menus\/.*'
@@ -44,6 +46,8 @@ module.exports = function (done) {
         app.use(bodyParser.json());
 
         app.use('/apis/v', require('vehicle-service'));
+        app.use('/apis/v', require('vehicle-make-service'));
+        app.use('/apis/v', require('vehicle-model-service'));
 
         //error handling
         //app.use(agent.error);

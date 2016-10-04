@@ -18,6 +18,8 @@
         "client-service": "serandules/client-service#master",
         "token-service": "serandules/token-service#master",
         "vehicle-service": "serandules/vehicle-service#master",
+        "vehicle-make-service": "serandules/vehicle-make-service#master",
+        "vehicle-model-service": "serandules/vehicle-model-service#master",
         "menu-service": "serandules/menu-service#master",
         "hub-agent": "serandules/hub-agent#master"
     },
