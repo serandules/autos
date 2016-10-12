@@ -20,8 +20,8 @@ auth = auth({
         '^\/apis\/v\/configs\/boot$',
         '^\/apis\/v\/tokens([\/].*|$)',
         '^\/apis\/v\/vehicles$',
-        '^\/apis\/v\/vehicle-makes$',
-        '^\/apis\/v\/vehicle-models$'
+        '^\/apis\/v\/vehicle-makes([\/].*|$)',
+        '^\/apis\/v\/vehicle-models([\/].*|$)'
     ],
     hybrid: [
         '^\/apis\/v\/menus\/.*'
