@@ -2,15 +2,16 @@ var log = require('logger')('autos');
 var nconf = require('nconf');
 var express = require('express');
 var bodyParser = require('body-parser');
+var locate = require('locate');
 var auth = require('auth');
 var serandi = require('serandi');
 var serand = require('serand');
 var dust = require('dustjs-linkedin');
 
-var client = 'autos';
-var version = nconf.get('CLIENT_AUTOS');
-var server = nconf.get('SERVER');
-var cdn = nconf.get('CDN');
+var domain = 'autos';
+var version = nconf.get('clients')[domain];
+var server = nconf.get('server');
+var cdn = nconf.get('cdn');
 
 var app = express();
 
@@ -29,13 +30,14 @@ auth = auth({
 });
 
 module.exports = function (done) {
-    serand.index(client, version, function (err, index) {
+    serand.index(domain, version, function (err, index) {
         if (err) {
             throw err;
         }
 
-        dust.loadSource(dust.compile(index, client));
+        dust.loadSource(dust.compile(index, domain));
 
+        app.use(locate('/apis/v'));
         app.use(serandi.ctx)
         app.use(auth);
 
@@ -64,7 +66,7 @@ module.exports = function (done) {
                 refresh: req.body.refresh_token
             };
             //TODO: check caching headers
-            dust.render(client, context, function (err, index) {
+            dust.render(domain, context, function (err, index) {
                 if (err) {
                     log.error(err);
                     res.status(500).send({
@@ -84,7 +86,7 @@ module.exports = function (done) {
                 version: version
             };
             //TODO: check caching headers
-            dust.render(client, context, function (err, index) {
+            dust.render(domain, context, function (err, index) {
                 if (err) {
                     log.error(err);
                     res.status(500).send({
