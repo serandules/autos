@@ -7,7 +7,7 @@ var dust = require('dustjs-linkedin');
 var errors = require('errors');
 
 var domain = 'autos';
-var version = nconf.get('CLIENT_' + domain.toUpperCase());
+var version = nconf.get('CLIENT_' + domain.toUpperCase() + '_INDEX');
 var server = nconf.get('SERVER');
 var cdn = nconf.get('CDN');
 
