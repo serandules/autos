@@ -14,7 +14,6 @@
         "clustor": "serandules/clustor#master",
         "locate": "serandules/locate#master",
         "auth": "serandules/auth#master",
-        "procevent": "serandules/procevent#master",
         "user-service": "serandules/user-service#master",
         "client-service": "serandules/client-service#master",
         "token-service": "serandules/token-service#master",
