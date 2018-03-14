@@ -10,6 +10,7 @@ var domain = 'autos';
 var version = nconf.get('INDEX_' + domain.toUpperCase());
 var server = nconf.get('SERVER');
 var cdn = nconf.get('CDN');
+var googleKey = nconf.get('GOOGLE_KEY');
 
 module.exports = function (router) {
 
@@ -29,7 +30,8 @@ module.exports = function (router) {
                 username: req.body.username,
                 access: req.body.access_token,
                 expires: req.body.expires_in,
-                refresh: req.body.refresh_token
+                refresh: req.body.refresh_token,
+                googleKey: googleKey
             };
             //TODO: check caching headers
             dust.render(domain, context, function (err, index) {
@@ -46,7 +48,8 @@ module.exports = function (router) {
             var context = {
                 server: server,
                 cdn: cdn,
-                version: version
+                version: version,
+                googleKey: googleKey
             };
             //TODO: check caching headers
             dust.render(domain, context, function (err, index) {
