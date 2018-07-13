@@ -11,6 +11,7 @@
         "mongoose": "5.1.8",
         "body-parser": "1.*",
         "logger": "serandules/logger#master",
+        "utils": "serandules/utils#master",
         "clustor": "serandules/clustor#master",
         "locate": "serandules/locate#master",
         "auth": "serandules/auth#master",

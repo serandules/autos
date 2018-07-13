@@ -2,13 +2,14 @@ var log = require('logger')('autos');
 var nconf = require('nconf');
 var bodyParser = require('body-parser');
 var locate = require('locate');
+var utils = require('utils');
 var serand = require('serand');
 var dust = require('dustjs-linkedin');
 var errors = require('errors');
 
 var domain = 'autos';
 var version = nconf.get('INDEX_' + domain.toUpperCase());
-var server = nconf.get('SERVER');
+var server = utils.serverUrl();
 var cdn = nconf.get('CDN');
 var googleKey = nconf.get('GOOGLE_KEY');
 
