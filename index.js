@@ -37,7 +37,7 @@ module.exports = function (router) {
             //TODO: check caching headers
             dust.render(domain, context, function (err, index) {
                 if (err) {
-                    log.error(err);
+                    log.error('dust:render', err);
                     return res.pond(errors.serverError());
                 }
                 res.set('Content-Type', 'text/html').status(200).send(index);
@@ -55,7 +55,7 @@ module.exports = function (router) {
             //TODO: check caching headers
             dust.render(domain, context, function (err, index) {
                 if (err) {
-                    log.error(err);
+                    log.error('dust:render', err);
                     return res.pond(errors.serverError());
                 }
                 res.set('Content-Type', 'text/html').status(200).send(index);
