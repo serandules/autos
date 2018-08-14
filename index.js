@@ -28,6 +28,7 @@ module.exports = function (router) {
                 server: server,
                 cdn: cdn,
                 version: version,
+                tid: req.body.tid,
                 username: req.body.username,
                 access: req.body.access_token,
                 expires: req.body.expires_in,
