@@ -23,7 +23,7 @@ module.exports = function (router) {
         }
         dust.loadSource(dust.compile(index, domain));
         //index page with embedded oauth tokens
-        router.all('/auth/oauth', function (req, res) {
+        router.all('/auth', function (req, res) {
             var context = {
                 server: server,
                 cdn: cdn,
