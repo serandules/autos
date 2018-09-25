@@ -6,6 +6,7 @@ var utils = require('utils');
 var serand = require('serand');
 var dust = require('dustjs-linkedin');
 var errors = require('errors');
+var serandi = require('serandi');
 
 var domain = 'autos';
 var version = nconf.get('INDEX_' + domain.toUpperCase());
@@ -44,6 +45,9 @@ module.exports = function (router) {
                 res.set('Content-Type', 'text/html').status(200).send(index);
             });
         });
+
+        router.use('/apis/*', serandi.notFound);
+
         //index page
         router.all('*', function (req, res) {
             //TODO: check caching headers
