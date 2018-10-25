@@ -14,11 +14,12 @@ var server = utils.serverUrl();
 var cdn = nconf.get('CDN');
 var googleKey = nconf.get('GOOGLE_KEY');
 
-module.exports = function (router) {
+module.exports = function (ctx) {
+    var router = ctx.router;
 
     router.use(bodyParser.urlencoded({extended: true}));
 
-    serand.index(domain, version, function (err, index) {
+    serand.index(domain, version, function (err, boot, index) {
         if (err) {
             throw err;
         }
@@ -28,6 +29,7 @@ module.exports = function (router) {
             var context = {
                 server: server,
                 cdn: cdn,
+                boot: boot,
                 version: version,
                 tid: req.body.tid,
                 username: req.body.username,
@@ -54,6 +56,7 @@ module.exports = function (router) {
             var context = {
                 server: server,
                 cdn: cdn,
+                boot: boot,
                 version: version,
                 googleKey: googleKey
             };
