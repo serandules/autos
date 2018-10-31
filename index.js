@@ -13,7 +13,7 @@ var serandi = require('serandi');
 var domain = 'autos';
 var version = nconf.get('INDEX_' + domain.toUpperCase());
 var server = utils.serverUrl();
-var cdn = nconf.get('CDN');
+var cdn = nconf.get('CDN_STATICS');
 var googleKey = nconf.get('GOOGLE_KEY');
 
 module.exports = function (router, done) {
