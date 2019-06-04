@@ -25,7 +25,7 @@ module.exports = function (router, done) {
       return done(err);
     }
     dust.loadSource(dust.compile(index, domain));
-    serand.configs(['boot', 'boot-autos'], function (err, configs) {
+    serand.configs(['boot', 'boot-autos', 'groups'], function (err, configs) {
       if (err) {
         return done(err);
       }
