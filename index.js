@@ -15,6 +15,7 @@ var version = nconf.get('INDEX_' + domain.toUpperCase());
 var server = utils.serverUrl();
 var cdn = nconf.get('CDN_STATICS');
 var googleKey = nconf.get('GOOGLE_KEY');
+var adsense = nconf.get('GOOGLE_ADSENSE');
 
 module.exports = function (router, done) {
 
@@ -34,6 +35,7 @@ module.exports = function (router, done) {
         var context = {
           cdn: cdn,
           version: version,
+          adsense: adsense,
           googleKey: googleKey,
           server: server,
           configs: configs,
@@ -61,6 +63,7 @@ module.exports = function (router, done) {
         var context = {
           cdn: cdn,
           version: version,
+          adsense: adsense,
           googleKey: googleKey,
           server: server,
           configs: configs
