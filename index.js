@@ -22,10 +22,12 @@ module.exports = function (router, done) {
 
   router.use(bodyParser.urlencoded({extended: true}));
 
+  log.info('index:autos', 'version:%s', version);
   serand.index(domain, version, function (err, index) {
     if (err) {
       return done(err);
     }
+    log.info('content:autos', 'content:%s', index);
     dust.loadSource(dust.compile(index, domain));
     serand.configs(['boot', 'boot-autos', 'groups'], function (err, configs) {
       if (err) {
