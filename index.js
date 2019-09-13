@@ -13,6 +13,7 @@ var serandi = require('serandi');
 var domain = 'autos';
 var version = nconf.get('INDEX_' + domain.toUpperCase());
 var server = utils.serverUrl();
+var subdomain = utils.subdomain();
 var cdn = nconf.get('CDN_STATICS');
 var googleKey = nconf.get('GOOGLE_KEY');
 var adsense = nconf.get('GOOGLE_ADSENSE');
@@ -38,6 +39,7 @@ module.exports = function (router, done) {
           adsense: adsense,
           googleKey: googleKey,
           server: server,
+          subdomain: subdomain,
           configs: configs,
           tid: req.body.tid,
           username: req.body.username,
@@ -66,6 +68,7 @@ module.exports = function (router, done) {
           adsense: adsense,
           googleKey: googleKey,
           server: server,
+          subdomain: subdomain,
           configs: configs
         };
         //TODO: check caching headers
